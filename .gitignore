@@ -2,7 +2,7 @@
 
 
 .idea/*
-.iml
+*.iml
 
 
 ### Java template
