@@ -27,6 +27,10 @@ import javax.ws.rs.*;
 //public class BusinessServiceRest implements BusinessService {
 public class BusinessServiceRest {
 
+  public static final String METHOD_DO_WORK = "doWork";
+  public static final String METHOD_DO_WORK_Q_TXT = "txt";
+
+
   @Inject BusinessService delegator;
 
 //  @GET()
@@ -38,10 +42,10 @@ public class BusinessServiceRest {
 
   //  @Override
   @GET()
-  @Path(value = "doWork")
+  @Path(value = METHOD_DO_WORK)
   @Produces("application/json")
   @Consumes("application/json")
-  public String doWork(@QueryParam("txt") final String txt) {
+  public String doWork(@QueryParam(METHOD_DO_WORK_Q_TXT) final String txt) {
     return new Gson().toJson(delegator.doWork(txt));
   }
 }

@@ -26,8 +26,10 @@
     </dependency>
     <dependency>
       <groupId>org.rapidpm.test.atto</groupId>
-      <artifactId>servicelocator</artifactId>
+      <artifactId>servicelocator-client</artifactId>
     </dependency>
+
+
   </dependencies>
 
 </project>

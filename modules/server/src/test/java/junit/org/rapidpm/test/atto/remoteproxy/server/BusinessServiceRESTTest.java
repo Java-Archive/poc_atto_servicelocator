@@ -9,10 +9,12 @@ import org.rapidpm.ddi.DI;
 import org.rapidpm.dependencies.core.net.PortUtils;
 import org.rapidpm.microservice.Main;
 import org.rapidpm.microservice.test.RestUtils;
-import org.rapidpm.test.atto.remoteproxy.server.DemoServiceREST;
+import org.rapidpm.test.atto.remoteproxy.server.BusinessServiceRest;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+
+import static org.rapidpm.test.atto.remoteproxy.server.BusinessServiceRest.METHOD_DO_WORK_Q_TXT;
 
 /**
  * Copyright (C) 2010 RapidPM
@@ -28,7 +30,7 @@ import javax.ws.rs.client.ClientBuilder;
  *
  * Created by RapidPM - Team on 31.05.16.
  */
-public class DemoServiceRESTTest {
+public class BusinessServiceRESTTest {
 
   @Before
   public void setUp() throws Exception {
@@ -40,9 +42,9 @@ public class DemoServiceRESTTest {
     System.setProperty(Main.REST_HOST_PROPERTY, "127.0.0.1");
     System.setProperty(Main.SERVLET_HOST_PROPERTY, "127.0.0.1");
 
-//    final PortUtils portUtils = new PortUtils();
-//    System.setProperty(Main.REST_PORT_PROPERTY, portUtils.nextFreePortForTest() + "");
-//    System.setProperty(Main.SERVLET_PORT_PROPERTY, portUtils.nextFreePortForTest() + "");
+    final PortUtils portUtils = new PortUtils();
+    System.setProperty(Main.REST_PORT_PROPERTY, portUtils.nextFreePortForTest() + "");
+    System.setProperty(Main.SERVLET_PORT_PROPERTY, portUtils.nextFreePortForTest() + "");
 
     Main.deploy();
   }
@@ -50,13 +52,14 @@ public class DemoServiceRESTTest {
   @Test
   public void get() throws Exception {
     final RestUtils restUtils = new RestUtils();
-    final String basicReqURL = restUtils.generateBasicReqURL(DemoServiceREST.class, Main.CONTEXT_PATH_REST);
+    final String basicReqURL = restUtils.generateBasicReqURL(BusinessServiceRest.class, Main.CONTEXT_PATH_REST);
 
     Client client = ClientBuilder.newClient();
     System.out.println("basicReqURL = " + basicReqURL);
     String json = client
         .target(basicReqURL)
-        .queryParam("value","Hello World")
+        .path(BusinessServiceRest.METHOD_DO_WORK)
+        .queryParam(METHOD_DO_WORK_Q_TXT, "Hello World")
         .request()
         .get(String.class);
 

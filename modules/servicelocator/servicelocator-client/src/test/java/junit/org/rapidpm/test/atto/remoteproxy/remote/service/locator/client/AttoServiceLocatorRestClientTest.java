@@ -1,13 +1,13 @@
-package junit.org.rapidpm.test.atto.remoteproxy.remote.service;
+package junit.org.rapidpm.test.atto.remoteproxy.remote.service.locator.client;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.rapidpm.ddi.DI;
-import org.rapidpm.microservice.Main;
-import org.rapidpm.test.atto.remoteproxy.api.service.BusinessService;
-import org.rapidpm.test.atto.remoteproxy.remote.service.BusinessServiceRemoteProxy;
+import org.rapidpm.test.atto.remoteproxy.remote.service.locator.client.AttoServiceLocatorRestClient;
+
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
@@ -24,35 +24,40 @@ import static org.assertj.core.api.Assertions.*;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Created by RapidPM - Team on 31.05.16.
+ * Created by RapidPM - Team on 02.06.16.
  */
-public class BusinessServiceRemoteProxyTest {
-
-
-  // starte ServiceLocator
-  // starte BusinessService
-  // test
+public class AttoServiceLocatorRestClientTest {
 
   @Before
   public void setUp() throws Exception {
     DI.clearReflectionModel();
     DI.activatePackages("org.rapidpm");
     DI.activatePackages(this.getClass());
-    Main.deploy();
   }
 
 
   @After
   public void tearDown() throws Exception {
-    Main.stop();
     DI.clearReflectionModel();
   }
 
   @Test
-  public void test001() throws Exception {
-    final BusinessService remoteProxy = DI.activateDI(BusinessServiceRemoteProxy.class);
-    final String val = remoteProxy.doWork("Hello World");
-    System.out.println("val = " + val);
-    Assert.assertEquals("hello world", val);
+  public void registerServiceAndResolve001() throws Exception {
+
+
+//    final AttoServiceLocatorRestClient serviceLocatorRestClient = new AttoServiceLocatorRestClient();
+//
+//    final Optional<String> resolve = serviceLocatorRestClient.resolve(BusinessService.class.getName());
+//    Assert.assertFalse(resolve.isPresent());
+//
+//    final RestUtils restUtils = new RestUtils();
+//    final String basicReqURL = restUtils.generateBasicReqURL(BusinessServiceRest.class, Main.CONTEXT_PATH_REST);
+//
+//
+//    serviceLocatorRestClient.registerService(BusinessService.class.getName(), "");
+
+
   }
+
+
 }

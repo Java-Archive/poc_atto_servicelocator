@@ -17,6 +17,11 @@
       <groupId>org.rapidpm.test.atto</groupId>
       <artifactId>servicelocator-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.rapidpm.microservice</groupId>
+      <artifactId>rapidpm-microservice-modules-core</artifactId>
+    </dependency>
+
   </dependencies>
 
 </project>

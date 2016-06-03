@@ -1,9 +1,10 @@
 package org.rapidpm.test.atto.remoteproxy.remote.service.locator.service;
 
+import org.rapidpm.ddi.DI;
+import org.rapidpm.ddi.scopes.provided.JVMSingletonInjectionScope;
+import org.rapidpm.microservice.Main;
 import org.rapidpm.test.atto.remoteproxy.remote.service.locator.api.AttoServiceLocator;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -18,24 +19,17 @@ import java.util.Optional;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Created by RapidPM - Team on 01.06.16.
+ * Created by RapidPM - Team on 02.06.16.
  */
-public class AttoServiceLocatorImpl implements AttoServiceLocator {
-
-
-  private Map<String, String> serviceLoctorTargetMap = new HashMap<>();
-
-  public void setServiceLocation(String clazzFQN, String target) {
-    serviceLoctorTargetMap.put(clazzFQN, target);
-  }
-
-  public void removeLocation(Class clazz) {
-    serviceLoctorTargetMap.remove(clazz);
-  }
-
+public class AttoServiceStartupAction implements Main.MainStartupAction {
   @Override
-  public Optional<String> resolve(final String clazzFQN) {
-    return Optional.ofNullable(serviceLoctorTargetMap.get(clazzFQN));
-  }
+  public void execute(final Optional<String[]> args) {
+    System.setProperty(Main.REST_HOST_PROPERTY, "127.0.0.1");
+    System.setProperty(Main.SERVLET_HOST_PROPERTY, "127.0.0.1");
 
+//    final PortUtils portUtils = new PortUtils();
+    System.setProperty(Main.REST_PORT_PROPERTY, "9999");
+//    System.setProperty(Main.SERVLET_PORT_PROPERTY, portUtils.nextFreePortForTest() + "");
+    DI.registerClassForScope(AttoServiceLocator.class, JVMSingletonInjectionScope.class.getSimpleName());
+  }
 }

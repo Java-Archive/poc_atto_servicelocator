@@ -38,7 +38,7 @@ public class BusinessServiceRemoteProxy implements BusinessService {
     if (resolve.isPresent()) {
       String json = client
           .target(resolve.get())
-          .queryParam("value", "Hello World") //Quest wo kommt das her ?
+          .queryParam("value", txt) //Quest wo kommt das her ?
           .request()
           .get(String.class);
 

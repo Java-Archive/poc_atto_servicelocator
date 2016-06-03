@@ -13,10 +13,11 @@
   <packaging>pom</packaging>
   <modules>
     <module>api</module>
+    <module>servicelocator</module>
+
     <module>logic</module>
     <module>server</module>
     <module>remote</module>
-    <module>servicelocator</module>
   </modules>
 
 

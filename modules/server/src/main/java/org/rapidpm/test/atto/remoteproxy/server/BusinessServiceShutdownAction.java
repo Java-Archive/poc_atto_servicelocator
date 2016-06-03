@@ -1,8 +1,8 @@
-package org.rapidpm.test.atto.remoteproxy.server.service;
+package org.rapidpm.test.atto.remoteproxy.server;
 
-import org.rapidpm.ddi.Produces;
-import org.rapidpm.ddi.producer.Producer;
-import org.rapidpm.test.atto.remoteproxy.api.service.BusinessService;
+import org.rapidpm.microservice.Main;
+
+import java.util.Optional;
 
 /**
  * Copyright (C) 2010 RapidPM
@@ -16,12 +16,14 @@ import org.rapidpm.test.atto.remoteproxy.api.service.BusinessService;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Created by RapidPM - Team on 01.06.16.
+ * Created by RapidPM - Team on 02.06.16.
  */
-@Produces(value = BusinessService.class)
-public class BusinessServiceProducer implements Producer<BusinessService> {
+public class BusinessServiceShutdownAction implements Main.MainShutdownAction {
   @Override
-  public BusinessService create() {
-    return new BusinessServiceImpl();
+  public void execute(final Optional<String[]> args) {
+    //DE-Register at ServiceLocator
+
+
+
   }
 }

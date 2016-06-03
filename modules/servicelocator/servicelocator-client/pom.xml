@@ -12,4 +12,23 @@
   <artifactId>servicelocator-client</artifactId>
 
 
+  <dependencies>
+    <dependency>
+      <groupId>org.rapidpm.test.atto</groupId>
+      <artifactId>servicelocator-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.rapidpm.test.atto</groupId>
+      <artifactId>api</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
 </project>
