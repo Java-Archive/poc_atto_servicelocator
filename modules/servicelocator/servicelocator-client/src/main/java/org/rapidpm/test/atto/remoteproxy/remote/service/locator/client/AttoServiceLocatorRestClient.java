@@ -24,7 +24,7 @@ import java.util.Optional;
 public class AttoServiceLocatorRestClient implements AttoServiceLocator {
 
   // get connection to the cluster
-  private final String serviceLocatorURL = "http://127.0.0.1:9999/attoservicelocator"; // TODO how to get or default?
+  private final String serviceLocatorURL = "http://10.1.1.5:9999/rest/attoservicelocator"; // TODO how to get or default?
 
   public void registerService(final String clazzFQN, String target) {
     ClientBuilder
@@ -49,7 +49,7 @@ public class AttoServiceLocatorRestClient implements AttoServiceLocator {
         .request()
         .get(String.class);
 
-    final String result = (responseJsonValue != null) ? new Gson().fromJson(responseJsonValue, String.class) : null;
+    final String result = (responseJsonValue != null && !responseJsonValue.equals("{}")) ? new Gson().fromJson(responseJsonValue, String.class) : null;
     return Optional.ofNullable(result);
   }
 }

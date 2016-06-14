@@ -1,6 +1,7 @@
 package org.rapidpm.test.atto.remoteproxy.server;
 
 import org.rapidpm.microservice.Main;
+import org.rapidpm.test.atto.remoteproxy.api.service.BusinessService;
 import org.rapidpm.test.atto.remoteproxy.remote.service.locator.client.AttoServiceLocatorRestClient;
 
 import java.util.Optional;
@@ -16,19 +17,20 @@ import java.util.Optional;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * <p>
  * Created by RapidPM - Team on 02.06.16.
  */
 public class BusinessServiceStartupAction implements Main.MainStartupAction {
 
-  private final String serviceLocatorURL = "http://127.0.0.1:9999/attoservicelocator"; // TODO how to get or default?
+    private final String serviceLocatorURL = "http://10.1.1.5:9999/rest/attoservicelocator"; // TODO how to get or default?
 
-  @Override
-  public void execute(final Optional<String[]> args) {
-    //Register at ServiceLocator
+    @Override
+    public void execute(final Optional<String[]> args) {
+        //Register at ServiceLocator
 
-    final AttoServiceLocatorRestClient locatorRestClient = new AttoServiceLocatorRestClient();
+        final AttoServiceLocatorRestClient locatorRestClient = new AttoServiceLocatorRestClient();
+        locatorRestClient.registerService(BusinessService.class.getName(), "http://10.1.1.5:7081/rest/businessservice");
 
 
-  }
+    }
 }

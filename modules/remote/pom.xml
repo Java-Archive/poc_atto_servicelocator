@@ -2,42 +2,73 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <groupId>org.rapidpm.test.atto</groupId>
-    <artifactId>modules</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.rapidpm.test.atto</groupId>
+        <artifactId>modules</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>remote</artifactId>
+    <artifactId>remote</artifactId>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.rapidpm.microservice</groupId>
-      <artifactId>rapidpm-microservice-modules-core-testutils</artifactId>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.rapidpm.microservice</groupId>
+            <artifactId>rapidpm-microservice-modules-core-testutils</artifactId>
+        </dependency>
 
-    <dependency>
-      <groupId>org.glassfish.jersey.core</groupId>
-      <artifactId>jersey-client</artifactId>
-    </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+        </dependency>
 
-    <dependency>
-      <groupId>org.rapidpm.test.atto</groupId>
-      <artifactId>api</artifactId>
-    </dependency>
+        <dependency>
+            <groupId>org.rapidpm.test.atto</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
 
-    <dependency>
-      <groupId>org.rapidpm.test.atto</groupId>
-      <artifactId>servicelocator-api</artifactId>
-    </dependency>
+        <dependency>
+            <groupId>org.rapidpm.test.atto</groupId>
+            <artifactId>servicelocator-api</artifactId>
+        </dependency>
 
-    <dependency>
-      <groupId>org.rapidpm.test.atto</groupId>
-      <artifactId>server</artifactId>
-      <scope>test</scope>
-    </dependency>
+        <dependency>
+            <groupId>org.rapidpm.test.atto</groupId>
+            <artifactId>server</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-  </dependencies>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <id>pre integration</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${user.home}/.rapidpm-vagrant/scripts/startAtto.sh</executable>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post integration</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${user.home}/.rapidpm-vagrant/scripts/stopAtto.sh</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

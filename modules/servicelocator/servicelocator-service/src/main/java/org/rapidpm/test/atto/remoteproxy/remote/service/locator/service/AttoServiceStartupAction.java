@@ -24,8 +24,8 @@ import java.util.Optional;
 public class AttoServiceStartupAction implements Main.MainStartupAction {
   @Override
   public void execute(final Optional<String[]> args) {
-    System.setProperty(Main.REST_HOST_PROPERTY, "127.0.0.1");
-    System.setProperty(Main.SERVLET_HOST_PROPERTY, "127.0.0.1");
+    //System.setProperty(Main.REST_HOST_PROPERTY, "127.0.0.1");
+    //System.setProperty(Main.SERVLET_HOST_PROPERTY, "127.0.0.1");
 
 //    final PortUtils portUtils = new PortUtils();
     System.setProperty(Main.REST_PORT_PROPERTY, "9999");
