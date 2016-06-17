@@ -24,7 +24,7 @@ import java.util.Optional;
 public class AttoServiceLocatorRestClient implements AttoServiceLocator {
 
   // get connection to the cluster
-  private final String serviceLocatorURL = "http://10.1.1.5:9999/rest/attoservicelocator"; // TODO how to get or default?
+  private final String serviceLocatorURL = "http://10.1.1.5:9999/rest/attoservicelocator/"; // TODO how to get or default?
 
   public void registerService(final String clazzFQN, String target) {
     ClientBuilder
