@@ -31,5 +31,44 @@
 
 
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>exec-maven-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <executions>
+          <execution>
+            <id>pre integration</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <workingDirectory>${integrationScriptsDir}</workingDirectory>
+              <executable>${integrationScriptsDir}/start.sh</executable>
+              <arguments>
+                <argument>atto-servicelocator</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>post integration</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <workingDirectory>${integrationScriptsDir}</workingDirectory>
+              <executable>${integrationScriptsDir}/stop.sh</executable>
+              <arguments>
+                <argument>atto-servicelocator</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 
 </project>

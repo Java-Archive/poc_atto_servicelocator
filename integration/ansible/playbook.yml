@@ -1,0 +1,51 @@
+- hosts: all
+
+- hosts: nexus
+  roles:
+  - role: ansible-role-java
+    become: yes
+    when: "ansible_os_family == 'Debian'"
+    java_packages:
+      - openjdk-8-jdk
+  - { role: ansible-nexus,
+      nexus_version: '3.0.0-03',
+      nexus_port: 9090,
+      become: yes}
+
+- hosts: atto-server
+  roles:
+  - role: ansible-role-java
+    become: yes
+    when: "ansible_os_family == 'Debian'"
+    java_packages:
+      - openjdk-8-jdk
+  - { role: ansible-rapidpm-microservice,
+      maven_artifact_id: "server",
+      maven_group_id: "org.rapidpm.test.atto",
+      nexus_ip: "10.1.1.3",
+      nexus_port: "9090",
+      become: yes}
+
+- hosts: atto-servicelocator
+  roles:
+  - role: ansible-role-java
+    become: yes
+    when: "ansible_os_family == 'Debian'"
+    java_packages:
+      - openjdk-8-jdk
+  - { role: ansible-rapidpm-microservice,
+      maven_artifact_id: "servicelocator-service",
+      maven_group_id: "org.rapidpm.test.atto",
+      nexus_ip: "10.1.1.3",
+      nexus_port: "9090",
+      microservice_rest_port: "9999",
+      become: yes}
+
+#- hosts: atto-client
+#  roles:
+#  - { role: ansible-rapidpm-microservice,
+#      maven_artifact_id: "remote",
+#      maven_group_id: "org.rapidpm.test.atto",
+#      nexus_ip: "10.1.1.3",
+#      nexus_port: "9090",
+#      become: yes}

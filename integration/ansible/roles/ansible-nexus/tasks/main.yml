@@ -1,0 +1,133 @@
+---
+
+# tasks file for ansible-nexus
+- name: Download nexus_package 
+#https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.0.0-03-unix.sh
+  get_url: url=https://sonatype-download.global.ssl.fastly.net/nexus/3/{{ nexus_package }} dest="{{ nexus_download_dir }}/{{ nexus_package }}"
+  tags: download
+  sudo: no
+
+- name: Ensure Nexus o/s group exists
+  group: name="{{ nexus_os_group }}" state=present
+  when: nexus_create_os_group
+  sudo: true
+
+- name: Ensure Nexus o/s user exists
+  user: name="{{ nexus_os_user }}" group="{{ nexus_os_group }}" shell="{{ nexus_os_user_shell }}" state=present
+  when: nexus_create_os_user
+  sudo: true
+
+- name: Ensure Nexus installation directory exists
+  file:
+    path="{{ nexus_installation_dir }}"
+    state="directory"
+  sudo: true
+
+- name: Unpack Nexus download
+  unarchive:
+    src="{{ nexus_download_dir }}/{{ nexus_package }}"
+    dest="{{ nexus_installation_dir }}"
+    creates="{{ nexus_installation_dir }}/nexus-{{ nexus_version }}"
+    force=no
+    copy=false
+    owner={{ nexus_os_user }}
+    group={{ nexus_os_group }}
+    mode="0755"
+  tags: unpack
+
+- name: Update symlink nexus-latest
+  file:
+   src="{{ nexus_installation_dir }}/nexus-{{ nexus_version }}"
+   dest="{{ nexus_installation_dir }}/nexus-latest"
+   owner="nexus"
+   group="nexus"
+   state=link
+
+- name: Install createrepo for nexus-yum-repository-plugin
+  yum: name=createrepo state=installed
+  when: ansible_os_family == "RedHat"
+
+- name: Check if sonatype working directory exists
+  stat: path="{{ nexus_installation_dir }}/sonatype-work"
+  register: s_w
+
+- name: Move existing sonatype working directory into specified working dir
+  command: mv "{{ nexus_installation_dir }}/sonatype-work" "{{ nexus_working_dir }}"
+  when: s_w.stat.exists
+
+- name: Set permissions and ownership on Nexus installation directory
+  file:
+    path={{ nexus_installation_dir }}/{{ nexus_package }}
+    state="directory"
+    owner="{{ nexus_os_user }}"
+    group="{{ nexus_os_group }}"
+    mode="0755"
+    recurse=true
+
+- name: Set permissions and ownership on Nexus work directory
+  file:
+    path={{ nexus_working_dir }}
+    state="directory"
+    owner="{{ nexus_os_user }}"
+    group="{{ nexus_os_group }}"
+    mode="0755"
+    recurse=true
+
+- name: Set permissions and ownership on Nexus logs directory
+  file:
+    path={{ nexus_installation_dir }}/nexus-latest/logs
+    owner="{{ nexus_os_user }}"
+    group="{{ nexus_os_group }}"
+    state=directory
+
+- name: Set permissions and ownership on Nexus tmp directory
+  file:
+    path="{{ nexus_installation_dir }}/nexus-latest/tmp"
+    owner="{{ nexus_os_user }}"
+    group="{{ nexus_os_group }}"
+    state=directory
+
+- name: Set permissions and ownership on Nexus pid directory
+  file:
+   path=/var/run/nexus
+   owner="{{ nexus_os_user }}"
+   group="{{ nexus_os_group }}"
+   state=directory
+
+- name: Link start script
+  file:
+   src="{{ nexus_installation_dir }}/nexus-{{ nexus_version }}/bin/nexus"
+   dest=/etc/init.d/nexus
+   owner="root"
+   group="root"
+   mode=0600
+   state=link
+
+
+- name: Configure port in org.sonatype.nexus.cfg
+  lineinfile:
+    dest="{{ nexus_installation_dir }}/nexus-{{ nexus_version }}/etc/org.sonatype.nexus.cfg"
+    regexp="application-port=.*"
+    line="application-port={{ nexus_port }}"
+    state=present
+  notify:
+    - 'restart nexus'
+- name: Configure user
+  lineinfile:
+    dest="{{ nexus_installation_dir }}/nexus-{{ nexus_version }}/bin/nexus.rc"
+    regexp="run_as_user=.*"
+    line="run_as_user='nexus'"
+    state=present
+  notify:
+    - 'restart nexus'
+
+
+- name: Register service with chkconfig system
+  service: name=nexus enabled=yes
+  when: ansible_os_family == "RedHat"
+
+- name: Set service start/stop order
+  sudo: yes
+  command: chkconfig nexus reset
+  when: ansible_os_family == "RedHat"
+

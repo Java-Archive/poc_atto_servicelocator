@@ -10,8 +10,8 @@
 
     <parent>
         <groupId>org.rapidpm</groupId>
-        <artifactId>integration-test-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>rapidpm-dependencies</artifactId>
+        <version>3.1.0-SNAPSHOT</version>
     </parent>
 
 
@@ -19,6 +19,10 @@
     <artifactId>remoteproxy</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <properties>
+        <integrationScriptsDir>./integration/scripts</integrationScriptsDir>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -126,8 +130,70 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- integration test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/integration/**.java</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <phase>integration-test</phase>
+                        <configuration>
+                            <excludes>
+                                <exclude>none</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/integration/**</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <id>Pre-Vagrant</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${integrationScriptsDir}</workingDirectory>
+                            <executable>${integrationScriptsDir}/start.sh</executable>
+                            <arguments>
+                                <argument>nexus</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>deploy-local-nexus</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>local-nexus-snapshots</id>
+                    <url>http://10.1.1.3:9090/repository/maven-snapshots/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
 
 </project>

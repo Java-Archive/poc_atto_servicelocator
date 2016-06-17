@@ -1,0 +1,18 @@
+---
+# handlers file for ansible-nexus
+
+- name: 'start nexus'
+  sudo: yes
+  service: name=nexus state=started
+  #wait_for: port={{nexus_web_port}} delay=10
+  tags:
+    - init
+
+- name: 'restart nexus'
+  sudo: yes
+  service: name=nexus state=restarted
+  notify:
+    - 'wait for nexus'
+
+- name: 'wait for nexus'
+  wait_for: port={{nexus_port}} delay=10

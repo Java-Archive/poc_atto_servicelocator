@@ -1,0 +1,17 @@
+---
+# handlers file for ansible-rapidpm-microservice
+
+- name: 'start microservice'
+  sudo: yes
+  service: name=microservice state=started
+  tags:
+    - init
+
+- name: 'restart microservice'
+  sudo: yes
+  service: name=microservice state=restarted
+  notify:
+    - 'wait for microservice'
+
+- name: 'wait for microservice'
+  wait_for: port="{{microservice_rest_port}}" delay=10 timeout=30

@@ -1,0 +1,37 @@
+---
+# tasks file for ansible-rapidpm-microservice
+
+- name: create group 
+  group: name="{{microservice_group}}" 
+
+- name: create user
+  user: name="{{microservice_user}}" group="{{microservice_group}}"
+
+- name: install python-lxm
+  apt: name=python-lxml update_cache=yes state=present
+
+- name: create path for microservice
+  file: path="{{microservice_path}}" owner="{{microservice_user}}" group="{{microservice_group}}" mode="755" state="directory"
+
+- name: get microservice from nexus
+  maven_artifact: 
+    group_id="{{maven_group_id}}"
+    artifact_id="{{maven_artifact_id}}"
+    repository_url="http://{{nexus_ip}}:{{nexus_port}}/repository/maven-snapshots/"
+    dest="{{microservice_path}}/{{microservice_jar}}"
+  notify:
+    - 'restart microservice'
+
+- name: create init script
+  template: src="startscript.j2" dest="/etc/init.d/microservice" owner="rapidpm" group="rapidpm" mode=0755
+
+
+- name: touch logfile
+  file: path="{{microservice_logfile}}" owner="{{microservice_user}}" group="{{microservice_group}}" mode="644" state="touch"
+
+- name: start service
+  stat: path="{{microservice_pidfile}}"
+  register: pidfile
+  notify:
+    - 'start microservice'
+    - when: not pidfile.stat.isreg

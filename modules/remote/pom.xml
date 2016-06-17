@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <integrationScriptsDir>${basedir}/../../integration/scripts/</integrationScriptsDir>
+            </properties>
+
     <artifactId>remote</artifactId>
 
     <dependencies>
@@ -52,7 +56,12 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${user.home}/.rapidpm-vagrant/scripts/startAtto.sh</executable>
+                            <workingDirectory>${integrationScriptsDir}</workingDirectory>
+                            <executable>${integrationScriptsDir}/start.sh</executable>
+                            <arguments>
+                                <argument>atto-servicelocator</argument>
+                                <argument>atto-server</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                     <execution>
@@ -62,7 +71,12 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${user.home}/.rapidpm-vagrant/scripts/stopAtto.sh</executable>
+                            <workingDirectory>${integrationScriptsDir}</workingDirectory>
+                            <executable>${integrationScriptsDir}/stop.sh</executable>
+                            <arguments>
+                                <argument>atto-servicelocator</argument>
+                                <argument>atto-server</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
