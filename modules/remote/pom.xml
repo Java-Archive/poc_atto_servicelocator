@@ -10,8 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <integrationScriptsDir>${basedir}/../../integration/scripts/</integrationScriptsDir>
-            </properties>
+        <integrationScriptsDir>${basedir}/../../integration/</integrationScriptsDir>
+    </properties>
+
 
     <artifactId>remote</artifactId>
 
@@ -57,10 +58,11 @@
                         </goals>
                         <configuration>
                             <workingDirectory>${integrationScriptsDir}</workingDirectory>
-                            <executable>${integrationScriptsDir}/start.sh</executable>
+                            <executable>vagrant</executable>
                             <arguments>
-                                <argument>atto-servicelocator</argument>
-                                <argument>atto-server</argument>
+                                <argument>up</argument>
+                                <argument>/atto-/</argument>
+                                <argument>--provision</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -72,10 +74,11 @@
                         </goals>
                         <configuration>
                             <workingDirectory>${integrationScriptsDir}</workingDirectory>
-                            <executable>${integrationScriptsDir}/stop.sh</executable>
+                            <executable>vagrant</executable>
                             <arguments>
-                                <argument>atto-servicelocator</argument>
-                                <argument>atto-server</argument>
+                                <argument>suspend</argument>
+                                <argument>/atto-/</argument>
+                                <argument>--provision</argument>
                             </arguments>
                         </configuration>
                     </execution>

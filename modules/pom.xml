@@ -11,6 +11,11 @@
 
   <artifactId>modules</artifactId>
   <packaging>pom</packaging>
+
+  <properties>
+    <integrationScriptsDir>${pom.basedir}/../integration</integrationScriptsDir>
+  </properties>
+
   <modules>
     <module>api</module>
     <module>servicelocator</module>

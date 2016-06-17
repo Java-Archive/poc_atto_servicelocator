@@ -21,7 +21,7 @@
 
 
     <properties>
-        <integrationScriptsDir>./integration/scripts</integrationScriptsDir>
+        <integrationScriptsDir>${pom.basedir}/integration</integrationScriptsDir>
     </properties>
 
     <dependencyManagement>
@@ -169,8 +169,9 @@
                         </goals>
                         <configuration>
                             <workingDirectory>${integrationScriptsDir}</workingDirectory>
-                            <executable>${integrationScriptsDir}/start.sh</executable>
+                            <executable>vagrant</executable>
                             <arguments>
+                                <argument>up</argument>
                                 <argument>nexus</argument>
                             </arguments>
                         </configuration>

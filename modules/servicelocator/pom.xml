@@ -26,4 +26,9 @@
 
 
   </dependencies>
+
+  <properties>
+    <integrationScriptsDir>${pom.basedir}/../../integration</integrationScriptsDir>
+  </properties>
+
 </project>

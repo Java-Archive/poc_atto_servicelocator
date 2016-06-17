@@ -10,6 +10,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>api</artifactId>
-
+  <properties>
+    <integrationScriptsDir>${project.basedir}\..\..\integration</integrationScriptsDir>
+  </properties>
 
 </project>

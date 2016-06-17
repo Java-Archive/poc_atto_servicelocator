@@ -10,6 +10,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>servicelocator-service-ui</artifactId>
-
+  <properties>
+    <integrationScriptsDir>${pom.basedir}/../../../integration</integrationScriptsDir>
+  </properties>
 
 </project>

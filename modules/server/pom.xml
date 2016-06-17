@@ -45,9 +45,11 @@
             </goals>
             <configuration>
               <workingDirectory>${integrationScriptsDir}</workingDirectory>
-              <executable>${integrationScriptsDir}/start.sh</executable>
+              <executable>vagrant</executable>
               <arguments>
+                <argument>up</argument>
                 <argument>atto-servicelocator</argument>
+                <argument>--provision</argument>
               </arguments>
             </configuration>
           </execution>
@@ -59,8 +61,9 @@
             </goals>
             <configuration>
               <workingDirectory>${integrationScriptsDir}</workingDirectory>
-              <executable>${integrationScriptsDir}/stop.sh</executable>
+              <executable>vagrant</executable>
               <arguments>
+                <argument>suspend</argument>
                 <argument>atto-servicelocator</argument>
               </arguments>
             </configuration>
@@ -70,5 +73,8 @@
     </plugins>
   </build>
 
+  <properties>
+    <integrationScriptsDir>${pom.basedir}/../../integration</integrationScriptsDir>
+  </properties>
 
 </project>
