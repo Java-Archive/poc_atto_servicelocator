@@ -1,10 +1,13 @@
 package org.rapidpm.test.atto.remoteproxy.remote.service.locator.client;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.rapidpm.test.atto.remoteproxy.remote.service.locator.api.AttoServiceLocator;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Response;
+import java.lang.reflect.Type;
 import java.util.Optional;
 
 /**
@@ -23,33 +26,38 @@ import java.util.Optional;
  */
 public class AttoServiceLocatorRestClient implements AttoServiceLocator {
 
+  private static final Type TYPE = new TypeToken<Optional<String>>() { }.getType();
   // get connection to the cluster
-  private final String serviceLocatorURL = "http://10.1.1.5:9999/rest/attoservicelocator/"; // TODO how to get or default?
+  private final String serviceLocatorURL = "http://10.1.1.5:9999/rest/attoservicelocator/"; //TODO how to get or default?
 
   public void registerService(final String clazzFQN, String target) {
-    ClientBuilder
+    final Gson gson = new Gson();
+    final Response response = ClientBuilder
         .newClient()
         .target(serviceLocatorURL)
         .path("registerService")
-        .queryParam("classFQN", clazzFQN) //Quest wo kommt das her ?
-        .queryParam("target", target) //Quest wo kommt das her ?
+        .queryParam("classFQN", gson.toJson(clazzFQN)) //Quest wo kommt das her ?
+        .queryParam("target", gson.toJson(target)) //Quest wo kommt das her ?
         .request()
-        .get()
-        .close();
+        .get();
+    //TODO logging if OK or not
+
+    response.close();
   }
 
   @Override
   public Optional<String> resolve(final String clazzFQN) {
+    final Gson gson = new Gson();
     final Client client = ClientBuilder.newClient();
     final String responseJsonValue = client
         .target(serviceLocatorURL)
         .path("resolve")
-        .queryParam("classFQN", clazzFQN) //Quest wo kommt das her ?
-        .queryParam("target", "Hello World") //Quest wo kommt das her ?
+        .queryParam("classFQN", gson.toJson(clazzFQN)) //Quest wo kommt das her ?
         .request()
         .get(String.class);
 
-    final String result = (responseJsonValue != null && !responseJsonValue.equals("{}")) ? new Gson().fromJson(responseJsonValue, String.class) : null;
-    return Optional.ofNullable(result);
+    if (responseJsonValue != null && !responseJsonValue.equals("{}")) {
+      return new Gson().fromJson(responseJsonValue, TYPE);
+    } else return Optional.empty();
   }
 }

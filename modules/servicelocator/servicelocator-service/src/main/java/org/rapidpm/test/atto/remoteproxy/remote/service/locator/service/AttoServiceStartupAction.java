@@ -24,12 +24,8 @@ import java.util.Optional;
 public class AttoServiceStartupAction implements Main.MainStartupAction {
   @Override
   public void execute(final Optional<String[]> args) {
-    //System.setProperty(Main.REST_HOST_PROPERTY, "127.0.0.1");
-    //System.setProperty(Main.SERVLET_HOST_PROPERTY, "127.0.0.1");
-
-//    final PortUtils portUtils = new PortUtils();
     System.setProperty(Main.REST_PORT_PROPERTY, "9999");
-//    System.setProperty(Main.SERVLET_PORT_PROPERTY, portUtils.nextFreePortForTest() + "");
     DI.registerClassForScope(AttoServiceLocator.class, JVMSingletonInjectionScope.class.getSimpleName());
+    DI.registerClassForScope(AttoServiceLocatorImpl.class, JVMSingletonInjectionScope.class.getSimpleName());
   }
 }

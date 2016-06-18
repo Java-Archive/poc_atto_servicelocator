@@ -23,19 +23,19 @@ import java.util.Optional;
 public class AttoServiceLocatorImpl implements AttoServiceLocator {
 
 
-  private Map<String, String> serviceLoctorTargetMap = new HashMap<>();
+  private Map<String, String> serviceLocatorTargetMap = new HashMap<>();
 
   public void setServiceLocation(String clazzFQN, String target) {
-    serviceLoctorTargetMap.put(clazzFQN, target);
+    serviceLocatorTargetMap.put(clazzFQN, target);
   }
 
   public void removeLocation(Class clazz) {
-    serviceLoctorTargetMap.remove(clazz);
+    serviceLocatorTargetMap.remove(clazz);
   }
 
   @Override
   public Optional<String> resolve(final String clazzFQN) {
-    return Optional.ofNullable(serviceLoctorTargetMap.get(clazzFQN));
+    return Optional.ofNullable(serviceLocatorTargetMap.get(clazzFQN));
   }
 
 }

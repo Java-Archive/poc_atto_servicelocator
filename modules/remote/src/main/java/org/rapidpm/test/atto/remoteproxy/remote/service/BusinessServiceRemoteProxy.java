@@ -36,13 +36,15 @@ public class BusinessServiceRemoteProxy implements BusinessService {
 
     final Optional<String> resolve = attoServiceLocator.resolve(BusinessService.class.getName());
     if (resolve.isPresent()) {
+      final Gson gson = new Gson();
       String json = client
           .target(resolve.get())
-          .queryParam("value", txt) //Quest wo kommt das her ?
+          .path("doWork")
+          .queryParam("txt", gson.toJson(txt)) //Quest wo kommt das her ?
           .request()
           .get(String.class);
 
-      return new Gson().fromJson(json, String.class);
+      return gson.fromJson(json, String.class);
     } else {
       return ""; //TODO  how to handle error / exceptions
     }

@@ -22,15 +22,9 @@ import java.util.Optional;
  */
 public class BusinessServiceStartupAction implements Main.MainStartupAction {
 
-    private final String serviceLocatorURL = "http://10.1.1.5:9999/rest/attoservicelocator"; // TODO how to get or default?
-
-    @Override
-    public void execute(final Optional<String[]> args) {
-        //Register at ServiceLocator
-
-        final AttoServiceLocatorRestClient locatorRestClient = new AttoServiceLocatorRestClient();
-        locatorRestClient.registerService(BusinessService.class.getName(), "http://10.1.1.5:7081/rest/businessservice");
-
-
-    }
+  @Override
+  public void execute(final Optional<String[]> args) {
+    final AttoServiceLocatorRestClient locatorRestClient = new AttoServiceLocatorRestClient();
+    locatorRestClient.registerService(BusinessService.class.getName(), "http://10.1.1.6:7081/rest/businessservice");
+  }
 }

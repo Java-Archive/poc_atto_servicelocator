@@ -46,9 +46,9 @@ if `[name_of_vm]` is given, the command as listed below will only be executed on
 
 ## Current VMs
 | Name | IP | installed artifact|
-|---------| -------|-----|
+|---------|-------|-----|
 |nexus  | 10.1.1.3| nexus|
-|atto-server| 10.1.1.5 |server of the attoservice poc|
-|atto-servicelocator|10.1.1.6|servicelocator of the atto service poc|
+|atto-servicelocator|10.1.1.5|servicelocator of the atto service poc|
+|atto-server| 10.1.1.6 |server of the attoservice poc|
 
 

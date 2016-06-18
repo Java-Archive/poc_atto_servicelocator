@@ -46,6 +46,7 @@ public class BusinessServiceRest {
   @Produces("application/json")
   @Consumes("application/json")
   public String doWork(@QueryParam(METHOD_DO_WORK_Q_TXT) final String txt) {
-    return new Gson().toJson(delegator.doWork(txt));
+    final Gson gson = new Gson();
+    return gson.toJson(delegator.doWork(gson.fromJson(txt, String.class)));
   }
 }

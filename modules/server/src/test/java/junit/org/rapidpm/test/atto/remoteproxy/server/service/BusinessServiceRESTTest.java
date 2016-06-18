@@ -1,10 +1,7 @@
-package integration.org.rapidpm.test.atto.remoteproxy.server;
+package junit.org.rapidpm.test.atto.remoteproxy.server.service;
 
 import com.google.gson.Gson;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.rapidpm.ddi.DI;
 import org.rapidpm.dependencies.core.net.PortUtils;
 import org.rapidpm.microservice.Main;
@@ -30,6 +27,7 @@ import static org.rapidpm.test.atto.remoteproxy.server.BusinessServiceRest.METHO
  *
  * Created by RapidPM - Team on 31.05.16.
  */
+
 public class BusinessServiceRESTTest {
 
   @Before
@@ -54,16 +52,17 @@ public class BusinessServiceRESTTest {
     final RestUtils restUtils = new RestUtils();
     final String basicReqURL = restUtils.generateBasicReqURL(BusinessServiceRest.class, Main.CONTEXT_PATH_REST);
 
+    final Gson gson = new Gson();
     Client client = ClientBuilder.newClient();
     System.out.println("basicReqURL = " + basicReqURL);
     String json = client
         .target(basicReqURL)
         .path(BusinessServiceRest.METHOD_DO_WORK)
-        .queryParam(METHOD_DO_WORK_Q_TXT, "Hello World")
+        .queryParam(METHOD_DO_WORK_Q_TXT, gson.toJson("Hello World"))
         .request()
         .get(String.class);
 
-    final String val = new Gson().fromJson(json, String.class);
+    final String val = gson.fromJson(json, String.class);
 
     System.out.println("val = " + val);
     Assert.assertEquals("hello world", val);
