@@ -21,28 +21,23 @@
             <groupId>org.rapidpm.microservice</groupId>
             <artifactId>rapidpm-microservice-modules-core-testutils</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.rapidpm.test.atto</groupId>
             <artifactId>api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.rapidpm.test.atto</groupId>
             <artifactId>servicelocator-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.rapidpm.test.atto</groupId>
             <artifactId>server</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -61,7 +56,8 @@
                             <executable>vagrant</executable>
                             <arguments>
                                 <argument>up</argument>
-                                <argument>/atto-/</argument>
+                                <!--<argument>/atto-/</argument>-->
+                                <argument>atto-servicelocator</argument>
                                 <argument>--provision</argument>
                             </arguments>
                         </configuration>
@@ -77,8 +73,8 @@
                             <executable>vagrant</executable>
                             <arguments>
                                 <argument>suspend</argument>
-                                <argument>/atto-/</argument>
-                                <argument>--provision</argument>
+                                <argument>atto-servicelocator</argument>
+                                <!--<argument>&#45;&#45;provision</argument>-->
                             </arguments>
                         </configuration>
                     </execution>
