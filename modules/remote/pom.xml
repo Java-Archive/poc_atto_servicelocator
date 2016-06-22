@@ -56,8 +56,8 @@
                             <executable>vagrant</executable>
                             <arguments>
                                 <argument>up</argument>
-                                <!--<argument>/atto-/</argument>-->
                                 <argument>atto-servicelocator</argument>
+                                <argument>atto-server</argument>
                                 <argument>--provision</argument>
                             </arguments>
                         </configuration>
@@ -74,7 +74,7 @@
                             <arguments>
                                 <argument>suspend</argument>
                                 <argument>atto-servicelocator</argument>
-                                <!--<argument>&#45;&#45;provision</argument>-->
+                                <argument>atto-server</argument>
                             </arguments>
                         </configuration>
                     </execution>

@@ -1,0 +1,19 @@
+filebeat_logstash_host: "10.1.1.2:5044"
+filebeat_elasticsearch_host: "10.1.1.2:9200"
+filebeat_version: 1.2.3
+filebeat_version_check: 1.2.3
+prospectors:
+  - id: syslog
+    paths:
+    - log_paths:
+      - /var/log/syslog
+      - /var/log/auth.log
+    document_type: syslog
+    type: syslog
+
+  - id: microservice
+    paths:
+    - log_paths:
+       - /opt/rapidpm/logs/*.log
+       - /opt/rapidpm/logs/*.out
+    type: log4j

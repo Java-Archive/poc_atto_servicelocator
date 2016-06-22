@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+ <Appenders>
+   <RollingFile name="LOG_FILE" fileName="{{microservice_path}}/logs/*.log"
+                   filePattern="logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
+        <PatternLayout>
+          <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+          <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+          <SizeBasedTriggeringPolicy size="10 MB"/>
+        </Policies>
+      </RollingFile>
+      <Socket name="A1" host="{{ logstash_ip }}" port="{{ logstash_port }}">
+            <SerializedLayout/>
+       </Socket>
+  </Appenders>
+  <Loggers>
+    <Root level="error">
+      <AppenderRef ref="LOG_FILE"/>
+      <AppenderRef ref="A1"/>
+    </Root>
+  </Loggers>
+</Configuration>

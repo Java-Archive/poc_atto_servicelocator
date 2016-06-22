@@ -5,9 +5,12 @@ maven_group_id: "org.rapidpm.test.atto"
 nexus_ip: "10.1.1.3"
 nexus_port: "9090"
 
+logstash_ip: "10.1.1.2"
+logstash_port: "5000"
+
 microservice_group: "rapidpm"
 microservice_user: "rapidpm"
-microservice_path: "/org/rapidpm"
+microservice_path: "/opt/rapidpm"
 microservice_jar: "microservice.jar"
 microservice_logfile: "{{microservice_path}}/microservice.log"
 microservice_pidfile: "{{microservice_path}}/microservice.pid"

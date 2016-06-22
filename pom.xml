@@ -162,7 +162,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <executions>
                     <execution>
-                        <id>Pre-Vagrant</id>
+                        <id>Start nexus</id>
                         <phase>install</phase>
                         <goals>
                             <goal>exec</goal>
@@ -173,6 +173,21 @@
                             <arguments>
                                 <argument>up</argument>
                                 <argument>nexus</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Start elk</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${integrationScriptsDir}</workingDirectory>
+                            <executable>vagrant</executable>
+                            <arguments>
+                                <argument>up</argument>
+                                <argument>elk</argument>
                             </arguments>
                         </configuration>
                     </execution>

@@ -25,9 +25,12 @@
 - name: create init script
   template: src="startscript.j2" dest="/etc/init.d/microservice" owner="rapidpm" group="rapidpm" mode=0755
 
+- name: create log4j config
+  template: src="log4j2.xml.j2" dest="{{ microservice_path }}/log4j2.xml" owner="rapidpm" group="rapidpm" mode=0755
 
-- name: touch logfile
-  file: path="{{microservice_logfile}}" owner="{{microservice_user}}" group="{{microservice_group}}" mode="644" state="touch"
+- name: create log dir
+  file: path="{{microservice_path}}/logs" owner="{{microservice_user}}" group="{{microservice_group}}" mode="755" state="directory"
+
 
 - name: start service
   stat: path="{{microservice_pidfile}}"

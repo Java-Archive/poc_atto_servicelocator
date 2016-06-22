@@ -8,7 +8,7 @@ echoGreen() { echo -e "${green}$1${reset}"; }
 echoYellow() { echo -e "${yellow}$1${reset}"; }
 
 start() {
-  PID=`java -cp {{microservice_path}}/{{microservice_jar}} org.rapidpm.microservice.Main > {{microservice_logfile}} & echo $!`
+  PID=`java -Dlog4j.configurationFile={{microservice_path}}/log4j2.xml -jar {{microservice_path}}/{{microservice_jar}} > {{microservice_logfile}} & echo $!`
   echo $PID>$PID_FILE
 }
 

@@ -4,6 +4,8 @@ import org.rapidpm.ddi.DI;
 import org.rapidpm.ddi.scopes.provided.JVMSingletonInjectionScope;
 import org.rapidpm.microservice.Main;
 import org.rapidpm.test.atto.remoteproxy.remote.service.locator.api.AttoServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
@@ -22,9 +24,16 @@ import java.util.Optional;
  * Created by RapidPM - Team on 02.06.16.
  */
 public class AttoServiceStartupAction implements Main.MainStartupAction {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AttoServiceLocatorImpl.class);
+  public static final String REST_PORT = "9999";
+
   @Override
   public void execute(final Optional<String[]> args) {
-    System.setProperty(Main.REST_PORT_PROPERTY, "9999");
+    LOGGER.info("startup atto-servicelocator");
+    System.setProperty(Main.REST_PORT_PROPERTY, REST_PORT);
+    LOGGER.info("setting rest port to <{}>", REST_PORT);
+
     DI.registerClassForScope(AttoServiceLocator.class, JVMSingletonInjectionScope.class.getSimpleName());
     DI.registerClassForScope(AttoServiceLocatorImpl.class, JVMSingletonInjectionScope.class.getSimpleName());
   }

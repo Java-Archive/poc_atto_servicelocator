@@ -1,0 +1,15 @@
+[submodule "integration/ansible/roles/ansible-role-elk-kibana"]
+	path = integration/ansible/roles/ansible-role-elk-kibana
+	url = https://github.com/jpnewman/ansible-role-elk-kibana.git
+[submodule "integration/ansible/roles/ansible-role-elasticsearch"]
+	path = integration/ansible/roles/ansible-role-elasticsearch
+	url = https://github.com/jpnewman/ansible-role-elasticsearch.git
+[submodule "integration/ansible/roles/logstash-role"]
+	path = integration/ansible/roles/logstash-role
+	url = https://github.com/comperiosearch/logstash-role.git
+[submodule "integration/ansible/roles/ansible-kibana"]
+	path = integration/ansible/roles/ansible-kibana
+	url = https://github.com/comperiosearch/ansible-kibana.git
+[submodule "integration/ansible/roles/ansible-elasticsearch"]
+	path = integration/ansible/roles/ansible-elasticsearch
+	url = https://github.com/comperiosearch/ansible-elasticsearch.git
