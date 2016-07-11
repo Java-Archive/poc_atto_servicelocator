@@ -1,7 +1,7 @@
 # AttoService POC
 
 #Clone the repo
-This repository does contain sumbmodules. To clone this repo and its submodules use the command <br>
+This repository does contain submodules. To clone this repo and its submodules use the command <br>
 `git clone --recursive` <br>
  To checkout the submodules on an already cloned repo use <br>
 `git submodule update --init --recursive`
